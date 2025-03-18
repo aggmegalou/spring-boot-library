@@ -1,4 +1,4 @@
-package com.luv2code.spring_boot_library;
+package com.luv2code.springbootlibrary;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
