@@ -2,16 +2,19 @@ package com.luv2code.springbootlibrary.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import com.luv2code.springbootlibrary.entity.Book;
 
 @Configuration
-public class MyDataRestConfig {
+public class MyDataRestConfig implements RepositoryRestConfigurer {
 
     private String theAllowedOrigins = "http://localhost:300";
-
+    
+    @Override
+    
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors){
         HttpMethod[] theUnsupportedActions = {
             HttpMethod.POST, 
@@ -21,17 +24,17 @@ public class MyDataRestConfig {
         
         config.exposeIdsFor(Book.class);
 
-        diasableHttpMethod(Book.class, config, theUnsupportedActions);
+        diasableHttpMethods(Book.class, config, theUnsupportedActions);
         /*Configure CORS Mapping */
         cors.addMapping(config.getBasePath() + "/**")
                  .allowedOrigins(theAllowedOrigins);
         
     }
-    private void diasableHttpMethod(Class theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions){
+    private void diasableHttpMethods(Class<?> theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions){
         config.getExposureConfiguration()
             .forDomainType(theClass)
-            .withItemExposure((metdata, HttpMethods) ->
-                HttpMethods.disable(theUnsupportedActions))
+            .withItemExposure((metdata, httpMethods) ->
+                httpMethods.disable(theUnsupportedActions))
             .withCollectionExposure((metdata, httpMethods) ->
                    httpMethods.disable(theUnsupportedActions));
 
