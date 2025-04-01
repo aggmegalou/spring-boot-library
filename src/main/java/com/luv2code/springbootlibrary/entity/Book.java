@@ -32,7 +32,7 @@ public class Book {
     @Column(name ="category")
     private String category;
 
-    @Column(name="img")
+    @Column(columnDefinition = "TEXT")
     private String img;
 
 
