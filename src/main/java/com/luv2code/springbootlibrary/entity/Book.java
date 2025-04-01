@@ -21,7 +21,7 @@ public class Book {
     private String author;
 
     @Column(columnDefinition = "TEXT")
-    private String dscription;
+    private String description;
 
     @Column(name="copies")
     private int copies;
